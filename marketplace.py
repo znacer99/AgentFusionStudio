@@ -1,15 +1,10 @@
-from fastapi import FastAPI
-from agent import Agent
-from marketplace import Marketplace
-
-app = FastAPI()
-market = Marketplace()
-
-#Add sample agent at startup
-@app.on_event("startup")
-def startup_event():
-    market.add_agent(Agent("Text Uppercaser", "Makes Text uppercase"))
-    
-@app.get("/agents")
-def list_agents():
-    return [{"id": agent.id, "name": vipo} for agent in market.agent.values]
+# marketplace.py - CORRECTED VERSION
+class Marketplace:
+    def __init__(self):
+        self.agents = {}
+        
+    def add_agent(self, agent):
+        self.agents[agent.id] = agent
+        
+    def get_agent(self, agent_id):
+        return self.agents.get(agent_id)
